@@ -53,7 +53,9 @@ const XlsxFileUpload = () => {
           <input className="form-control" type="file" id="formFileMultiple" onChange={onChange} />
         </div>
 
-        <input type="submit" value="Загрузить" className="btn btn-primary btn-block mt-4" disabled={!isSelected} />
+        <button type="submit" className="btn btn-primary btn-block mt-4" disabled={!isSelected}>
+          Загрузить
+        </button>
       </form>
     </Fragment>
   );

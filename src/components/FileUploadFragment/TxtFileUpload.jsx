@@ -4,7 +4,11 @@ import axios from "axios";
 const TxtFileUpload = () => {
   const [txtFile, setTxtFile] = useState("");
   const [isSelected, setIsSelected] = useState(false);
-  // const [uploadedFile, setUploadedFile] = useState({});
+  const [textColor, setTextColor] = useState("bg-warning");
+  const [status, setStatus] = useState("Файл не загружен");
+
+  // Непонятно почему не работает через useState
+  let isUploaded = false;
 
   const onChange = (e) => {
     const file = e.target.files[0];
@@ -30,14 +34,13 @@ const TxtFileUpload = () => {
         },
       });
 
-      console.log(res.data);
+      if (res.status === 200) {
+        isUploaded = true;
+        setTextColor("bg-success");
+        setStatus("Файл успешно загружен");
+      }
 
-      const { name, url } = res.data[0];
-
-      console.log(url);
-      console.log(name);
-
-      // setUploadedFile({ url, fileName });
+      setIsSelected(!isUploaded);
     } catch (err) {
       console.log(err);
     }
@@ -53,7 +56,13 @@ const TxtFileUpload = () => {
           <input className="form-control" type="file" id="formFileMultiple" onChange={onChange} />
         </div>
 
-        <input type="submit" value="Загрузить" className="btn btn-primary btn-block mt-4" disabled={!isSelected} />
+        <p className={textColor}>
+          <b>{status}</b>
+        </p>
+
+        <button type="submit" className="btn btn-primary btn-block mt-4" disabled={!isSelected}>
+          Загрузить
+        </button>
       </form>
     </Fragment>
   );
