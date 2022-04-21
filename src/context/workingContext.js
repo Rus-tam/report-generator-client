@@ -1,21 +1,22 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 
 const WorkingContext = createContext();
 
 export const WorkingProvider = ({ children }) => {
+  // File Upload
   const [txtUploaded, setTxtUploaded] = useState(false);
   const [xlsxUploaded, setXlsxUploaded] = useState(false);
   const [txtStatusColor, setTxtStatusColor] = useState("bg-warning");
   const [xlsxStatusColor, setXlsxStatusColor] = useState("bg-warning");
   const [txtStatus, setTxtStatus] = useState("Файл с нагрузками ВКУ не загружен");
   const [xlsxStatus, setXlsxStatus] = useState("Файл с данными по потокам не загружен");
-
-  // Experimental
   const [file, setFile] = useState("");
   const [isTxtSelected, setIsTxtSelected] = useState(false);
-  let [isXlsxSelected, setIsXlsxSelected] = useState(false);
+  const [isXlsxSelected, setIsXlsxSelected] = useState(false);
+
+  const [mainBtnDisabled, setMainBtnDisabled] = useState(false);
 
   const onChange = (e) => {
     const file = e.target.files[0];
@@ -62,6 +63,10 @@ export const WorkingProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    txtUploaded && xlsxUploaded ? setMainBtnDisabled(true) : null;
+  }, [txtUploaded && xlsxUploaded]);
+
   return (
     <WorkingContext.Provider
       value={{
@@ -73,6 +78,7 @@ export const WorkingProvider = ({ children }) => {
         isXlsxSelected,
         xlsxStatusColor,
         xlsxStatus,
+        mainBtnDisabled,
       }}
     >
       {children}
