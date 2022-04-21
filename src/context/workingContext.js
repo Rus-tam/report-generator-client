@@ -5,51 +5,76 @@ import axios from "axios";
 const WorkingContext = createContext();
 
 export const WorkingProvider = ({ children }) => {
-  // Txt file upload
-  const [txtFile, setTxtFile] = useState("");
-  const [isSelected, setIsSelected] = useState(false);
   const [txtUploaded, setTxtUploaded] = useState(false);
-  const [textColor, setTextColor] = useState("bg-warning");
-  const [txtStatus, setTxtStatus] = useState("Файл не загружен");
+  const [xlsxUploaded, setXlsxUploaded] = useState(false);
+  const [txtStatusColor, setTxtStatusColor] = useState("bg-warning");
+  const [xlsxStatusColor, setXlsxStatusColor] = useState("bg-warning");
+  const [txtStatus, setTxtStatus] = useState("Файл с нагрузками ВКУ не загружен");
+  const [xlsxStatus, setXlsxStatus] = useState("Файл с данными по потокам не загружен");
 
-  const onChangeTxt = (e) => {
+  // Experimental
+  const [file, setFile] = useState("");
+  const [isTxtSelected, setIsTxtSelected] = useState(false);
+  let [isXlsxSelected, setIsXlsxSelected] = useState(false);
+
+  const onChange = (e) => {
     const file = e.target.files[0];
 
     if (file.name.split(".").pop() === "txt") {
-      setTxtFile(file);
-      setIsSelected(true);
+      setFile(file);
+      setIsTxtSelected(true);
+    } else if (file.name.split(".").pop() === "xlsx") {
+      setFile(file);
+      setIsXlsxSelected(true);
     } else {
       alert(`Приложение не поддерживает файлы формата .${file.name.split(".").pop()}`);
       e.target.value = "";
     }
   };
 
-  const onSubmitTxt = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("files", txtFile);
+    formData.append("files", file);
 
     try {
-      const res = await axios.post("http://localhost:5000/upload", formData, {
+      const response = await axios.post("http://localhost:5000/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      if (res.status === 200) {
+      if (response.status === 200 && isTxtSelected) {
         setTxtUploaded(true);
-        setTextColor("bg-success");
-        setTxtStatus("Файл успешно загружен");
+        setTxtStatusColor("bg-success");
+        setTxtStatus("Файл с нагрузками ВКУ успешно загружен");
+        setIsTxtSelected(txtUploaded); // Выключаем кнопку после загрузки файла
       }
 
-      setIsSelected(!txtUploaded);
-    } catch (err) {
-      console.log(err);
+      if (response.status === 200 && isXlsxSelected) {
+        setXlsxUploaded(true);
+        setXlsxStatusColor("bg-success");
+        setXlsxStatus("Файл с данными по потокам успешно загружен");
+        setIsXlsxSelected(xlsxUploaded); // Выключаем кнопку после загрузки файла
+      }
+    } catch (e) {
+      alert("Что-то прошло не так. Зовите Рустама он все починит");
     }
   };
 
   return (
-    <WorkingContext.Provider value={{ onChangeTxt, onSubmitTxt, textColor, isSelected, txtStatus }}>
+    <WorkingContext.Provider
+      value={{
+        onChange,
+        onSubmit,
+        txtStatusColor,
+        isTxtSelected,
+        txtStatus,
+        isXlsxSelected,
+        xlsxStatusColor,
+        xlsxStatus,
+      }}
+    >
       {children}
     </WorkingContext.Provider>
   );

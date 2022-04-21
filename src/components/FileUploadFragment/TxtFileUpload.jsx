@@ -1,24 +1,24 @@
-import React, { Fragment, useState, useContext } from "react";
+import React, { Fragment, useContext } from "react";
 import WorkingContext from "../../context/workingContext";
 
 const TxtFileUpload = () => {
-  const { onChangeTxt, isSelected, onSubmitTxt, textColor, txtStatus } = useContext(WorkingContext);
+  const { onChange, isTxtSelected, onSubmit, txtStatusColor, txtStatus } = useContext(WorkingContext);
 
   return (
     <Fragment>
-      <form onSubmit={onSubmitTxt}>
+      <form onSubmit={onSubmit}>
         <div className="mb-4">
           <label htmlFor="formFileMultiple" className="form-label">
             Загрузите данные по нагрузкам в формате <b>.txt</b>
           </label>
-          <input className="form-control" type="file" id="formFileMultiple" onChange={onChangeTxt} />
+          <input className="form-control" type="file" id="formFileMultiple" onChange={onChange} />
         </div>
 
-        <p className={textColor}>
+        <p className={txtStatusColor}>
           <b>{txtStatus}</b>
         </p>
 
-        <button type="submit" className="btn btn-primary btn-block mt-4" disabled={!isSelected}>
+        <button type="submit" className="btn btn-primary btn-block mt-4" disabled={!isTxtSelected}>
           Загрузить
         </button>
       </form>
