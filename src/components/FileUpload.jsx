@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import WorkingContext from "../context/workingContext";
 
@@ -6,9 +6,16 @@ import TxtFileUpload from "./FileUploadFragment/TxtFileUpload";
 import XlsxFileUpload from "./FileUploadFragment/XlsxFileUpload";
 
 const FileUpload = () => {
+  let name = "";
   const { mainBtnDisabled } = useContext(WorkingContext);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    name = localStorage.getItem("Name");
+
+    name === null ? navigate("/enter-name") : null;
+  }, []);
 
   const startAnalyze = () => {
     navigate("/results");

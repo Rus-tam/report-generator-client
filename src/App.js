@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import FileUpload from "./components/FileUpload";
-import ResultObserve from "./components/resultObserve";
+import NameEnter from "./components/NameEnter";
+import ResultObserve from "./components/ResultObserve";
 import { WorkingProvider } from "./context/workingContext";
 
 const App = () => {
@@ -12,6 +13,7 @@ const App = () => {
           <Routes>
             <Route exact path="/" element={<FileUpload />}></Route>
             <Route path="/results" element={<ResultObserve />}></Route>
+            <Route path="/enter-name" element={<NameEnter />}></Route>
           </Routes>
         </div>
       </Router>

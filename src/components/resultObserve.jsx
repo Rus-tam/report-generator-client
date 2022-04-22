@@ -21,7 +21,7 @@ const ResultObserve = () => {
   console.log(allData);
 
   return (
-    <div>
+    <div className="mb-4 text-center">
       <h1>Result Observe Page</h1>
     </div>
   );
