@@ -2,7 +2,7 @@ import React, { Fragment, useContext } from "react";
 import WorkingContext from "../../context/workingContext";
 
 const XlsxFileUpload = () => {
-  const { isXlsxSelected, onChange, xlsxStatusColor, onSubmit, xlsxStatus } = useContext(WorkingContext);
+  const { isXlsxSelected, onChangeXlsx, xlsxStatusColor, onSubmit, xlsxStatus } = useContext(WorkingContext);
 
   return (
     <Fragment>
@@ -11,7 +11,7 @@ const XlsxFileUpload = () => {
           <label htmlFor="formFileMultiple" className="form-label">
             Загрузите данные по потокам в форматe <b>.xlsx</b>
           </label>
-          <input className="form-control" type="file" id="formFileMultiple" onChange={onChange} />
+          <input className="form-control" type="file" id="formFileMultiple" onChange={onChangeXlsx} />
         </div>
 
         <p className={xlsxStatusColor}>

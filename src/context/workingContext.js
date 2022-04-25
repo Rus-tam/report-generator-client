@@ -18,17 +18,32 @@ export const WorkingProvider = ({ children }) => {
 
   const [mainBtnDisabled, setMainBtnDisabled] = useState(false);
 
-  const onChange = (e) => {
-    const file = e.target.files[0];
+  const onChangeTxt = (e) => {
+    const selectedFile = e.target.files[0];
 
-    if (file.name.split(".").pop() === "txt") {
-      setFile(file);
+    if (selectedFile.name.split(".").pop() === "txt") {
+      setFile(selectedFile);
       setIsTxtSelected(true);
-    } else if (file.name.split(".").pop() === "xlsx") {
-      setFile(file);
-      setIsXlsxSelected(true);
+    } else if (selectedFile.name.split(".").pop() === "xlsx") {
+      alert("Сюда можно вставить только файл формата .txt");
+      e.target.value = "";
     } else {
-      alert(`Приложение не поддерживает файлы формата .${file.name.split(".").pop()}`);
+      alert(`Приложение не поддерживает файлы формата .${selectedFile.name.split(".").pop()}`);
+      e.target.value = "";
+    }
+  };
+
+  const onChangeXlsx = (e) => {
+    const selectedFile = e.target.files[0];
+
+    if (selectedFile.name.split(".").pop() === "xlsx") {
+      setFile(selectedFile);
+      setIsXlsxSelected(true);
+    } else if (selectedFile.name.split(".").pop() === "txt") {
+      alert("Сюда можно вставить только файл формата .xlsx");
+      e.target.value = "";
+    } else {
+      alert(`Приложение не поддерживает файлы формата .${selectedFile.name.split(".").pop()}`);
       e.target.value = "";
     }
   };
@@ -49,14 +64,16 @@ export const WorkingProvider = ({ children }) => {
         },
       });
 
-      if (response.status === 200 && isTxtSelected) {
+      console.log(response);
+
+      if (response.status === 200 && isTxtSelected && file.name.split(".").pop() === "txt") {
         setTxtUploaded(true);
         setTxtStatusColor("bg-success");
         setTxtStatus("Файл с нагрузками ВКУ успешно загружен");
         setIsTxtSelected(txtUploaded); // Выключаем кнопку после загрузки файла
       }
 
-      if (response.status === 200 && isXlsxSelected) {
+      if (response.status === 200 && isXlsxSelected && file.name.split(".").pop() === "xlsx") {
         setXlsxUploaded(true);
         setXlsxStatusColor("bg-success");
         setXlsxStatus("Файл с данными по потокам успешно загружен");
@@ -74,7 +91,6 @@ export const WorkingProvider = ({ children }) => {
   return (
     <WorkingContext.Provider
       value={{
-        onChange,
         onSubmit,
         txtStatusColor,
         isTxtSelected,
@@ -83,6 +99,8 @@ export const WorkingProvider = ({ children }) => {
         xlsxStatusColor,
         xlsxStatus,
         mainBtnDisabled,
+        onChangeXlsx,
+        onChangeTxt,
       }}
     >
       {children}
