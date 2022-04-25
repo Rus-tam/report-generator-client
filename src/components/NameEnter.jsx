@@ -7,7 +7,7 @@ const NameEnter = () => {
   const saveName = (e) => {
     e.preventDefault();
 
-    const name = e.target[0].value;
+    const name = e.target[0].value.toLowerCase().trim();
 
     localStorage.setItem("Name", name);
 

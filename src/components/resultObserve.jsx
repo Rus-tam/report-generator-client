@@ -8,8 +8,15 @@ const ResultObserve = () => {
     getAllData();
   }, []);
 
+  // Поиск имени пользователя
+  const name = localStorage.getItem("Name");
+
   const getAllData = async () => {
-    const response = await axios.get("http://localhost:5000/");
+    const response = await axios.get("http://localhost:5000/", {
+      headers: {
+        Name: name,
+      },
+    });
 
     if (response.status === 200) {
       setAllData(response.data);

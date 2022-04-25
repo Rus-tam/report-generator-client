@@ -38,10 +38,14 @@ export const WorkingProvider = ({ children }) => {
     const formData = new FormData();
     formData.append("files", file);
 
+    // Поиск имени пользователя
+    const name = localStorage.getItem("Name");
+
     try {
       const response = await axios.post("http://localhost:5000/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Name: name,
         },
       });
 
