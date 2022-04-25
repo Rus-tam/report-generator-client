@@ -16,6 +16,8 @@ export const WorkingProvider = ({ children }) => {
   const [isTxtSelected, setIsTxtSelected] = useState(false);
   const [isXlsxSelected, setIsXlsxSelected] = useState(false);
 
+  const [formDisabled, setFormDisabled] = useState(true);
+
   const [mainBtnDisabled, setMainBtnDisabled] = useState(false);
 
   const onChangeTxt = (e) => {
@@ -64,13 +66,12 @@ export const WorkingProvider = ({ children }) => {
         },
       });
 
-      console.log(response);
-
       if (response.status === 200 && isTxtSelected && file.name.split(".").pop() === "txt") {
         setTxtUploaded(true);
         setTxtStatusColor("bg-success");
         setTxtStatus("Файл с нагрузками ВКУ успешно загружен");
         setIsTxtSelected(txtUploaded); // Выключаем кнопку после загрузки файла
+        setFormDisabled(false);
       }
 
       if (response.status === 200 && isXlsxSelected && file.name.split(".").pop() === "xlsx") {
@@ -101,6 +102,7 @@ export const WorkingProvider = ({ children }) => {
         mainBtnDisabled,
         onChangeXlsx,
         onChangeTxt,
+        formDisabled,
       }}
     >
       {children}
