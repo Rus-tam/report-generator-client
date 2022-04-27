@@ -6,12 +6,18 @@ const NameEnter = () => {
 
   const saveName = (e) => {
     e.preventDefault();
-
+    const regexp = /^[a-z\s]+$/i;
     const name = e.target[0].value.toLowerCase().trim();
-
     localStorage.setItem("Name", name);
 
-    navigate("/");
+    if (!regexp.test(name)) {
+      alert("Ну я же просил имя на латинице!");
+    } else if (name === "gulshat") {
+      alert("Привет, Гульшатик!");
+      navigate("/");
+    } else {
+      navigate("/");
+    }
   };
 
   return (
@@ -23,7 +29,7 @@ const NameEnter = () => {
             <form onSubmit={saveName}>
               <div>
                 <label className="form-label" htmlFor="nameForm">
-                  <b>Введите свое имя</b>
+                  <b>Введите свое имя литиницей</b>
                 </label>
                 <input className="form-control" type="text" id="nameForm" />
               </div>
