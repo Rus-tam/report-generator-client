@@ -8,6 +8,8 @@ const ResultObserve = () => {
   const [allData, setAllData] = useState();
   let feedStreams = [];
   let drawStreams = [];
+  let feedProperties = [];
+  let drawProperties = [];
 
   useEffect(() => {
     getAllData();
@@ -32,14 +34,14 @@ const ResultObserve = () => {
   };
 
   if (allData) {
-    feedStreams = makeArrayStreamTray(allData.txtData.feedStages);
-    drawStreams = makeArrayStreamTray(allData.txtData.drawStages);
+    feedStreams = [...makeArrayStreamTray(allData.txtData.feedStages)];
+    drawStreams = [...makeArrayStreamTray(allData.txtData.drawStages)];
 
-    makeArrayStreamMassFlow(allData.txtData.feedStages, allData.excelData.feedProperties);
+    feedProperties = [...makeArrayStreamMassFlow(allData.txtData.feedStages, allData.excelData.feedProperties)];
+    drawProperties = [...makeArrayStreamMassFlow(allData.txtData.drawStages, allData.excelData.drawProperties)];
   }
 
   console.log(allData);
-  console.log(feedStreams);
 
   if (allData) {
     return (
@@ -51,10 +53,20 @@ const ResultObserve = () => {
             </div>
           </div>
 
-          <div className="row text-center align-middle mb-4">
+          <div className="row text-center mb-4">
             <div className="col-md-4">
               <h3 className="mb-4">Сырьевые потоки</h3>
-              <h5>Ступени подачи сырья</h5>
+              <h6>Ступени подачи сырья</h6>
+            </div>
+            <div className="col-md-4"></div>
+            <div className="col-md-4">
+              <h3 className="mb-4">Продуктовые потоки</h3>
+              <h6>Ступени отбора продуктов</h6>
+            </div>
+          </div>
+
+          <div className="row text-left mb-4">
+            <div className="col-md-4">
               <ul>
                 {feedStreams.map((stream) => (
                   <li key={feedStreams.indexOf(stream)}>
@@ -65,8 +77,6 @@ const ResultObserve = () => {
             </div>
             <div className="col-md-4"></div>
             <div className="col-md-4">
-              <h3 className="mb-4">Продуктовые потоки</h3>
-              <h5>Ступени отбора продуктов</h5>
               <ul>
                 {drawStreams.map((stream) => (
                   <li key={drawStreams.indexOf(stream)}>
@@ -77,24 +87,34 @@ const ResultObserve = () => {
             </div>
           </div>
 
-          <div className="row text-center align-middle">
+          <div className="row text-center mb-4">
             <div className="col-md-4">
-              <h5>Массовые расходы сырьевых потоков, кг/ч</h5>
+              <h6>Сырьевые потоки</h6>
+            </div>
+            <div className="col-md-4"></div>
+            <div className="col-md-4">
+              <h6>Продуктовые потоки</h6>
+            </div>
+          </div>
+
+          <div className="row text-left">
+            <div className="col-md-4">
               <ul>
-                {feedStreams.map((stream) => (
-                  <li key={feedStreams.indexOf(stream)}>
-                    Поток {stream.key} поступает на {stream.value} тарелку
+                {feedProperties.map((stream) => (
+                  <li key={feedProperties.indexOf(stream)}>
+                    Расход потока <b>{stream.stream}</b> составляет <b>{stream.properties["Mass Flow [kg/h]"]}</b> кг/ч
+                    с температурой <b>{stream.properties["Temperature [C]"]}</b> <sup>o</sup>C
                   </li>
                 ))}
               </ul>
             </div>
             <div className="col-md-4"></div>
             <div className="col-md-4">
-              <h5>Массовые расходы продуктовых потоков, кг/ч</h5>
               <ul>
-                {drawStreams.map((stream) => (
-                  <li key={drawStreams.indexOf(stream)}>
-                    С {stream.value} тарелки отбирается поток {stream.key}
+                {drawProperties.map((stream) => (
+                  <li key={drawProperties.indexOf(stream)}>
+                    Расход потока <b>{stream.stream}</b> составляет <b>{stream.properties["Mass Flow [kg/h]"]}</b> кг/ч
+                    с температурой <b>{stream.properties["Temperature [C]"]}</b> <sup>o</sup>C
                   </li>
                 ))}
               </ul>
