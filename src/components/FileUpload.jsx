@@ -22,15 +22,32 @@ const FileUpload = () => {
   };
 
   return (
-    <div className="mb-4 text-center">
-      <h1 className="display-4 text-center mb-4">Добро пожаловать в генератор отчетов</h1>
+    <div className="d-flex align-items-center">
+      <div className="container mt-4">
+        <div className="row text-center align-middle">
+          <div className="mb-4">
+            <h1>Добро пожаловать в генератор отчетов</h1>
+          </div>
+        </div>
 
-      <TxtFileUpload />
-      <XlsxFileUpload />
+        <div className="row text-center align-middle mb-4">
+          <div className="col-md-4"></div>
+          <div className="col-md-4">
+            <TxtFileUpload />
+            <XlsxFileUpload />
 
-      <button type="button" className="btn btn-primary btn-lg mt-4" disabled={!mainBtnDisabled} onClick={startAnalyze}>
-        Начать анализ
-      </button>
+            <button
+              type="button"
+              className="btn btn-primary btn-lg mt-4"
+              disabled={!mainBtnDisabled}
+              onClick={startAnalyze}
+            >
+              Начать анализ
+            </button>
+          </div>
+          <div className="col-md-4"></div>
+        </div>
+      </div>
     </div>
   );
 };
