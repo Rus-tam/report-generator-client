@@ -89,6 +89,24 @@ export const WorkingProvider = ({ children }) => {
     txtUploaded && xlsxUploaded ? setMainBtnDisabled(true) : null;
   }, [txtUploaded && xlsxUploaded]);
 
+  // Получить все данные с сервера
+  const [allData, setAllData] = useState();
+
+  const getAllData = async () => {
+    const name = localStorage.getItem("Name");
+    const response = await axios.get("http://localhost:5000/", {
+      headers: {
+        Name: name,
+      },
+    });
+
+    if (response.status === 200) {
+      setAllData(response.data);
+    } else {
+      alert("Сервер лежит, поди и ты полежи");
+    }
+  };
+
   return (
     <WorkingContext.Provider
       value={{
@@ -103,6 +121,8 @@ export const WorkingProvider = ({ children }) => {
         onChangeXlsx,
         onChangeTxt,
         formDisabled,
+        getAllData,
+        allData,
       }}
     >
       {children}

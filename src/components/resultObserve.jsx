@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "./layout/Spinner";
 import makeArrayStreamTray from "./utils/makeArrayStreamTray";
 import makeArrayStreamMassFlow from "./utils/makeArrayStreamMassFlow";
+import WorkingContext from "../context/workingContext";
 
 const ResultObserve = () => {
-  const [allData, setAllData] = useState();
+  // const [allData, setAllData] = useState();
+  const { allData, getAllData } = useContext(WorkingContext);
   let feedStreams = [];
   let drawStreams = [];
   let feedProperties = [];
@@ -19,19 +21,19 @@ const ResultObserve = () => {
   const name = localStorage.getItem("Name");
 
   // Получение информации
-  const getAllData = async () => {
-    const response = await axios.get("http://localhost:5000/", {
-      headers: {
-        Name: name,
-      },
-    });
+  // const getAllData = async () => {
+  //   const response = await axios.get("http://localhost:5000/", {
+  //     headers: {
+  //       Name: name,
+  //     },
+  //   });
 
-    if (response.status === 200) {
-      setAllData(response.data);
-    } else {
-      alert("Сервер лежит, поди и ты полежи");
-    }
-  };
+  //   if (response.status === 200) {
+  //     setAllData(response.data);
+  //   } else {
+  //     alert("Сервер лежит, поди и ты полежи");
+  //   }
+  // };
 
   if (allData) {
     feedStreams = [...makeArrayStreamTray(allData.txtData.feedStages)];
@@ -41,7 +43,7 @@ const ResultObserve = () => {
     drawProperties = [...makeArrayStreamMassFlow(allData.txtData.drawStages, allData.excelData.drawProperties)];
   }
 
-  console.log(allData);
+  // console.log(allData);
 
   if (allData) {
     return (
