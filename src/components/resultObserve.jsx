@@ -2,10 +2,11 @@ import React, { useContext, useEffect } from "react";
 import Spinner from "./layout/Spinner";
 import makeArrayStreamMassFlow from "./utils/makeArrayStreamMassFlow";
 import WorkingContext from "../context/workingContext";
-import FeedDropDown from "./dropdowns/FeedDropdown";
+import Button from "react-bootstrap/Button";
+import FeedModal from "./modal-windows/FeedModal";
 
 const ResultObserve = () => {
-  const { allData, getAllData } = useContext(WorkingContext);
+  const { allData, getAllData, handleShow, handleClose, show } = useContext(WorkingContext);
   let feedProperties = [];
   let drawProperties = [];
 
@@ -18,7 +19,7 @@ const ResultObserve = () => {
     drawProperties = [...makeArrayStreamMassFlow(allData.txtData.drawStages, allData.excelData.drawProperties)];
   }
 
-  // console.log(allData);
+  console.log(allData);
 
   if (allData) {
     return (
@@ -74,12 +75,23 @@ const ResultObserve = () => {
 
           <div className="row text-center mb-4">
             <div className="col-md-4">
-              <h6>Дополнительные сырьевые потоки</h6>
-              <FeedDropDown />
+              <div>
+                <Button variant="primary" onClick={handleShow}>
+                  Выбрать дополнительные сырьевые потоки
+                </Button>
+
+                <FeedModal />
+              </div>
             </div>
             <div className="col-md-4"></div>
             <div className="col-md-4">
-              <h6>Дополнительные продуктовые потоки</h6>
+              <div>
+                <Button variant="primary" onClick={handleShow}>
+                  Выбрать дополнительные продуктовые потоки
+                </Button>
+
+                <FeedModal />
+              </div>
             </div>
           </div>
         </div>

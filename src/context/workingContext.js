@@ -107,6 +107,12 @@ export const WorkingProvider = ({ children }) => {
     }
   };
 
+  // Модальное окно
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const handleSelect = () => {};
+
   return (
     <WorkingContext.Provider
       value={{
@@ -123,6 +129,10 @@ export const WorkingProvider = ({ children }) => {
         formDisabled,
         getAllData,
         allData,
+        show,
+        handleClose,
+        handleShow,
+        handleSelect,
       }}
     >
       {children}
