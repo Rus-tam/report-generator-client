@@ -6,18 +6,28 @@ import WorkingContext from "../../context/workingContext";
 function FeedModal() {
   const { show, handleClose, allData, handleSelect } = useContext(WorkingContext);
 
-  return (
-    <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Выберите дополнительные сырьевые потоки</Modal.Title>
-      </Modal.Header>
-      <Modal.Body></Modal.Body>
-      <Modal.Footer>
-        <Button onClick={handleSelect}>Выбрать потоки</Button>
-        <Button onClick={handleClose}>Закрыть</Button>
-      </Modal.Footer>
-    </Modal>
-  );
+  const allStreams = allData.excelData.allStreams;
+
+  if (allData) {
+    return (
+      <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">Выберите дополнительные сырьевые потоки</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {allStreams.map((stream) => (
+            <Button key={allStreams.indexOf(stream)} className="me-1 mb-1" variant="success">
+              {stream}
+            </Button>
+          ))}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={handleSelect}>Выбрать потоки</Button>
+          <Button onClick={handleClose}>Закрыть</Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
 }
 
 export default FeedModal;

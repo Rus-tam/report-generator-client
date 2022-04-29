@@ -19,7 +19,7 @@ const ResultObserve = () => {
     drawProperties = [...makeArrayStreamMassFlow(allData.txtData.drawStages, allData.excelData.drawProperties)];
   }
 
-  console.log(allData);
+  // console.log(allData);
 
   if (allData) {
     return (
