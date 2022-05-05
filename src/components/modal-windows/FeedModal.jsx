@@ -1,23 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import WorkingContext from "../../context/workingContext";
 
 const FeedModal = () => {
-  const { show, handleClose, allData, handleSelect } = useContext(WorkingContext);
-  const [streams, setStreams] = useState([]);
-
-  const selectedStreams = [];
+  const { show, handleClose, allData, handleChange, handleFeedSelect } = useContext(WorkingContext);
 
   const allStreams = allData.excelData.allStreams;
-
-  const handleClick = (stream) => (e) => {
-    if (!streams.includes(stream.stream)) {
-      selectedStreams.push(stream.stream);
-    }
-
-    setStreams((streams) => [...streams, ...selectedStreams]);
-  };
 
   if (allData) {
     return (
@@ -26,30 +16,23 @@ const FeedModal = () => {
           <Modal.Title id="contained-modal-title-vcenter">Выберите дополнительные сырьевые потоки</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {allStreams.map((stream) => (
-            <Button
-              key={stream}
-              className="me-1 mb-1"
-              variant={selectedStreams.includes(stream) ? "danger" : "success"}
-              onClick={handleClick({ stream })}
-            >
-              {stream}
-            </Button>
-          ))}
-          <hr />
-          <div>
-            <h6>Выбранные потоки</h6>
-            <ul className="list-inline">
-              {streams.map((stream) => (
-                <li key={stream} className="list-inline-item">
-                  {stream}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <Form className="col-md-12">
+            {allStreams.map((stream) => (
+              <Form.Check
+                inline
+                label={stream}
+                name="group"
+                type="checkbox"
+                id={stream}
+                key={stream}
+                className="mb-4"
+                onChange={handleChange}
+              />
+            ))}
+          </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={handleSelect}>Выбрать потоки</Button>
+          <Button onClick={handleFeedSelect}>Выбрать потоки</Button>
           <Button onClick={handleClose}>Закрыть</Button>
         </Modal.Footer>
       </Modal>

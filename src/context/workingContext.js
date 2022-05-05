@@ -111,7 +111,22 @@ export const WorkingProvider = ({ children }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handleSelect = () => {};
+
+  let addFeedStreams = [];
+  let selectedStreams = [];
+
+  const handleChange = (e) => {
+    if (e.target.checked) {
+      selectedStreams.push(e.target.id);
+    } else if (!e.target.checked) {
+      selectedStreams = selectedStreams.filter((stream) => stream !== e.target.id);
+    }
+  };
+
+  const handleFeedSelect = () => {
+    addFeedStreams = [...selectedStreams];
+    console.log("gggg", addFeedStreams);
+  };
 
   return (
     <WorkingContext.Provider
@@ -132,7 +147,9 @@ export const WorkingProvider = ({ children }) => {
         show,
         handleClose,
         handleShow,
-        handleSelect,
+        handleChange,
+        selectedStreams,
+        handleFeedSelect,
       }}
     >
       {children}
