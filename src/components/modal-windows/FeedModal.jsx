@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import WorkingContext from "../../context/workingContext";
 
 const FeedModal = () => {
-  const { show, handleClose, allData, handleChange, handleFeedSelect } = useContext(WorkingContext);
+  const { show, handleClose, allData, handleChange, handleSelect, feedModal } = useContext(WorkingContext);
 
   const allStreams = allData.excelData.allStreams;
 
@@ -13,7 +13,9 @@ const FeedModal = () => {
     return (
       <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">Выберите дополнительные сырьевые потоки</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Выберите дополнительные {feedModal ? "сырьевые" : "продуктовые"} потоки
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form className="col-md-12">
@@ -32,7 +34,7 @@ const FeedModal = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={handleFeedSelect}>Выбрать потоки</Button>
+          <Button onClick={handleSelect}>Выбрать потоки</Button>
           <Button onClick={handleClose}>Закрыть</Button>
         </Modal.Footer>
       </Modal>

@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import FeedModal from "./modal-windows/FeedModal";
 
 const ResultObserve = () => {
-  const { allData, getAllData, handleShow, handleClose, show } = useContext(WorkingContext);
+  const { allData, getAllData, handleShowFeed, handleShowDraw } = useContext(WorkingContext);
   let feedProperties = [];
   let drawProperties = [];
 
@@ -76,7 +76,7 @@ const ResultObserve = () => {
           <div className="row text-center mb-4">
             <div className="col-md-4">
               <div>
-                <Button variant="primary" onClick={handleShow}>
+                <Button variant="primary" onClick={handleShowFeed}>
                   Выбрать дополнительные сырьевые потоки
                 </Button>
 
@@ -86,7 +86,7 @@ const ResultObserve = () => {
             <div className="col-md-4"></div>
             <div className="col-md-4">
               <div>
-                <Button variant="primary" onClick={handleShow}>
+                <Button variant="primary" onClick={handleShowDraw}>
                   Выбрать дополнительные продуктовые потоки
                 </Button>
 

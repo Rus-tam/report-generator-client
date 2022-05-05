@@ -108,11 +108,20 @@ export const WorkingProvider = ({ children }) => {
   };
 
   // Модальное окно
+  const [feedModal, setFeedModal] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShowFeed = () => {
+    setShow(true);
+    setFeedModal(true);
+  };
+  const handleShowDraw = () => {
+    setShow(true);
+    setFeedModal(false);
+  };
 
   let addFeedStreams = [];
+  let addDrawStreams = [];
   let selectedStreams = [];
 
   const handleChange = (e) => {
@@ -123,9 +132,17 @@ export const WorkingProvider = ({ children }) => {
     }
   };
 
-  const handleFeedSelect = () => {
-    addFeedStreams = [...selectedStreams];
-    console.log("gggg", addFeedStreams);
+  const handleSelect = () => {
+    if (feedModal) {
+      addFeedStreams = [...selectedStreams];
+      handleClose();
+    } else {
+      addDrawStreams = [...selectedStreams];
+      handleClose();
+    }
+    console.log("Feed", addFeedStreams);
+    console.log("------------------------");
+    console.log("Draw", addDrawStreams);
   };
 
   return (
@@ -146,10 +163,12 @@ export const WorkingProvider = ({ children }) => {
         allData,
         show,
         handleClose,
-        handleShow,
+        handleShowFeed,
         handleChange,
         selectedStreams,
-        handleFeedSelect,
+        handleSelect,
+        handleShowDraw,
+        feedModal,
       }}
     >
       {children}
