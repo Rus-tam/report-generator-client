@@ -1,12 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import WorkingContext from "../../context/workingContext";
 
-function FeedModal() {
+const FeedModal = () => {
   const { show, handleClose, allData, handleSelect } = useContext(WorkingContext);
+  const [streams, setStreams] = useState([]);
+
+  const selectedStreams = [];
 
   const allStreams = allData.excelData.allStreams;
+
+  const handleClick = (stream) => (e) => {
+    if (!streams.includes(stream.stream)) {
+      selectedStreams.push(stream.stream);
+    }
+
+    setStreams((streams) => [...streams, ...selectedStreams]);
+  };
 
   if (allData) {
     return (
@@ -16,10 +27,26 @@ function FeedModal() {
         </Modal.Header>
         <Modal.Body>
           {allStreams.map((stream) => (
-            <Button key={allStreams.indexOf(stream)} className="me-1 mb-1" variant="success">
+            <Button
+              key={stream}
+              className="me-1 mb-1"
+              variant={selectedStreams.includes(stream) ? "danger" : "success"}
+              onClick={handleClick({ stream })}
+            >
               {stream}
             </Button>
           ))}
+          <hr />
+          <div>
+            <h6>Выбранные потоки</h6>
+            <ul className="list-inline">
+              {streams.map((stream) => (
+                <li key={stream} className="list-inline-item">
+                  {stream}
+                </li>
+              ))}
+            </ul>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={handleSelect}>Выбрать потоки</Button>
@@ -28,6 +55,6 @@ function FeedModal() {
       </Modal>
     );
   }
-}
+};
 
 export default FeedModal;
