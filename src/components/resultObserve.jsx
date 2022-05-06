@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import FeedModal from "./modal-windows/FeedModal";
 
 const ResultObserve = () => {
-  const { allData, getAllData, handleShowFeed, handleShowDraw } = useContext(WorkingContext);
+  const { allData, getAllData, handleShowFeed, handleShowDraw, handleGenerateRep } = useContext(WorkingContext);
   let feedProperties = [];
   let drawProperties = [];
 
@@ -23,11 +23,13 @@ const ResultObserve = () => {
 
   if (allData) {
     return (
-      <div className="d-flex align-items-center">
+      <div className="d-flex align-items-center" id="resultObservePage">
         <div className="container-fluid mt-4">
           <div className="row text-center align-middle">
             <div>
-              <h1>Колонна @{allData.txtData.colNumb}</h1>
+              <h1>
+                Колонна @{allData.txtData.colNumb} ({allData.txtData.numberOfTrays} тарелок)
+              </h1>
             </div>
           </div>
 
@@ -93,6 +95,12 @@ const ResultObserve = () => {
                 <FeedModal />
               </div>
             </div>
+          </div>
+
+          <div className="d-grid gap-2">
+            <Button variant="success" size="lg" onClick={handleGenerateRep}>
+              Сгенерировать отчет
+            </Button>
           </div>
         </div>
       </div>

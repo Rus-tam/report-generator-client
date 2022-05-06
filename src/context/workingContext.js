@@ -135,14 +135,64 @@ export const WorkingProvider = ({ children }) => {
   const handleSelect = () => {
     if (feedModal) {
       addFeedStreams = [...selectedStreams];
+      localStorage.setItem("FeedStreams", addFeedStreams);
       handleClose();
     } else {
       addDrawStreams = [...selectedStreams];
+      localStorage.setItem("DrawStreams", addDrawStreams);
       handleClose();
     }
-    console.log("Feed", addFeedStreams);
-    console.log("------------------------");
-    console.log("Draw", addDrawStreams);
+  };
+
+  // Сгенерировать отчет и скачать файл
+  const downloadFile = async () => {
+    const name = localStorage.getItem("Name");
+    try {
+      const responseGet = await fetch("http://localhost:5000/download", {
+        headers: {
+          Name: name,
+        },
+      });
+      console.log(responseGet);
+      if (responseGet.status === 200) {
+        const blob = await responseGet.blob();
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.download = "column_info.xlsx";
+        document.getElementById("resultObservePage").appendChild(link);
+        link.click();
+        link.remove();
+      }
+    } catch (Error) {
+      console.log(Error);
+    }
+  };
+  const handleGenerateRep = async (e) => {
+    e.stopPropagation();
+    const name = localStorage.getItem("Name");
+
+    try {
+      const responsePost = await axios.post(
+        "http://localhost:5000/",
+        {
+          addFeedStreams: localStorage.getItem("FeedStreams").split(","),
+          addDrawStreams: localStorage.getItem("DrawStreams").split(","),
+        },
+        {
+          headers: {
+            Name: name,
+          },
+        },
+      );
+
+      console.log(responsePost.status);
+    } catch (Error) {
+      console.log(Error);
+    }
+
+    // Скачать файл
+    downloadFile();
   };
 
   return (
@@ -169,6 +219,7 @@ export const WorkingProvider = ({ children }) => {
         handleSelect,
         handleShowDraw,
         feedModal,
+        handleGenerateRep,
       }}
     >
       {children}
