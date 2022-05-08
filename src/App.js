@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import FileUpload from "./components/FileUpload";
 import NameEnter from "./components/NameEnter";
 import ResultObserve from "./components/ResultObserve";
+import About from "./components/About";
 import { WorkingProvider } from "./context/workingContext";
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
             <Route exact path="/" element={<FileUpload />}></Route>
             <Route path="/results" element={<ResultObserve />}></Route>
             <Route path="/enter-name" element={<NameEnter />}></Route>
+            <Route path="/about" element={<About />}></Route>
           </Routes>
         </div>
       </Router>

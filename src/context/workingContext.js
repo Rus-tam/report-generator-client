@@ -153,7 +153,7 @@ export const WorkingProvider = ({ children }) => {
           Name: name,
         },
       });
-      console.log(responseGet);
+
       if (responseGet.status === 200) {
         const blob = await responseGet.blob();
         const downloadUrl = window.URL.createObjectURL(blob);
@@ -185,14 +185,16 @@ export const WorkingProvider = ({ children }) => {
           },
         },
       );
-
-      console.log(responsePost.status);
     } catch (Error) {
       console.log(Error);
     }
 
     // Скачать файл
     downloadFile();
+
+    // Очищаем localStorage
+    localStorage.setItem("FeedStreams", "");
+    localStorage.setItem("DrawStreams", "");
   };
 
   return (

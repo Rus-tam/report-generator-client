@@ -9,6 +9,13 @@ const FeedModal = () => {
 
   const allStreams = allData.excelData.allStreams;
 
+  let selectedStreams = [];
+  if (feedModal) {
+    selectedStreams = [...localStorage.getItem("FeedStreams").split(",")];
+  } else {
+    selectedStreams = [...localStorage.getItem("DrawStreams").split(",")];
+  }
+
   if (allData) {
     return (
       <Modal size="lg" aria-labelledby="contained-modal-title-vcenter" centered show={show} onHide={handleClose}>
