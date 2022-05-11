@@ -4,6 +4,7 @@ import FileUpload from "./components/FileUpload";
 import NameEnter from "./components/NameEnter";
 import ResultObserve from "./components/ResultObserve";
 import About from "./components/About";
+import Error from "./components/Error";
 import { WorkingProvider } from "./context/workingContext";
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
             <Route path="/results" element={<ResultObserve />}></Route>
             <Route path="/enter-name" element={<NameEnter />}></Route>
             <Route path="/about" element={<About />}></Route>
+            <Route path="/error" element={<Error />}></Route>
           </Routes>
         </div>
       </Router>
