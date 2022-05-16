@@ -3,18 +3,11 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import WorkingContext from "../../context/workingContext";
+import FeedForm from "./FeedForm";
+import DrawForm from "./DrawForm";
 
 const FeedModal = () => {
-  const { show, handleClose, allData, handleChange, handleSelect, feedModal } = useContext(WorkingContext);
-
-  const allStreams = allData.excelData.allStreams;
-
-  let selectedStreams = [];
-  if (feedModal) {
-    selectedStreams = [...localStorage.getItem("FeedStreams").split(",")];
-  } else {
-    selectedStreams = [...localStorage.getItem("DrawStreams").split(",")];
-  }
+  const { show, handleClose, handleSelect, allData, feedModal } = useContext(WorkingContext);
 
   if (allData) {
     return (
@@ -25,20 +18,7 @@ const FeedModal = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form className="col-md-12">
-            {allStreams.map((stream) => (
-              <Form.Check
-                inline
-                label={stream}
-                name="group"
-                type="checkbox"
-                id={stream}
-                key={stream}
-                className="mb-4"
-                onChange={handleChange}
-              />
-            ))}
-          </Form>
+          <Form className="col-md-12">{feedModal ? <FeedForm /> : <DrawForm />}</Form>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={handleSelect}>Выбрать потоки</Button>

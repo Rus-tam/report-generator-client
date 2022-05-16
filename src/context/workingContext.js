@@ -120,26 +120,33 @@ export const WorkingProvider = ({ children }) => {
     setFeedModal(false);
   };
 
-  let addFeedStreams = [];
-  let addDrawStreams = [];
   let selectedStreams = [];
 
+  let selectedFeedStreams = localStorage.getItem("FeedStreams").split(",");
+  let selectedDrawStreams = localStorage.getItem("DrawStreams").split(",");
+
   const handleChange = (e) => {
-    if (e.target.checked) {
-      selectedStreams.push(e.target.id);
-    } else if (!e.target.checked) {
-      selectedStreams = selectedStreams.filter((stream) => stream !== e.target.id);
+    if (feedModal) {
+      if (e.target.checked) {
+        selectedFeedStreams.push(e.target.id);
+      } else if (!e.target.checked) {
+        selectedFeedStreams = selectedFeedStreams.filter((stream) => stream !== e.target.id);
+      }
+    } else {
+      if (e.target.checked) {
+        selectedDrawStreams.push(e.target.id);
+      } else if (!e.target.checked) {
+        selectedDrawStreams = selectedDrawStreams.filter((stream) => stream !== e.target.id);
+      }
     }
   };
 
   const handleSelect = () => {
     if (feedModal) {
-      addFeedStreams = [...selectedStreams];
-      localStorage.setItem("FeedStreams", addFeedStreams);
+      localStorage.setItem("FeedStreams", selectedFeedStreams);
       handleClose();
     } else {
-      addDrawStreams = [...selectedStreams];
-      localStorage.setItem("DrawStreams", addDrawStreams);
+      localStorage.setItem("DrawStreams", selectedDrawStreams);
       handleClose();
     }
   };
@@ -222,6 +229,8 @@ export const WorkingProvider = ({ children }) => {
         handleShowDraw,
         feedModal,
         handleGenerateRep,
+        selectedFeedStreams,
+        selectedDrawStreams,
       }}
     >
       {children}

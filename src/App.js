@@ -16,8 +16,9 @@ const App = () => {
             <Route exact path="/" element={<FileUpload />}></Route>
             <Route path="/results" element={<ResultObserve />}></Route>
             <Route path="/enter-name" element={<NameEnter />}></Route>
+            <Route path="/results" element={<ResultObserve />}></Route>
             <Route path="/about" element={<About />}></Route>
-            <Route path="/error" element={<Error />}></Route>
+            <Route path="*" element={<Error />}></Route>
           </Routes>
         </div>
       </Router>

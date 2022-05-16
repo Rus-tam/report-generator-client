@@ -15,6 +15,9 @@ const NavBar = () => {
             <Nav.Link href="/">
               <h4>Домой</h4>
             </Nav.Link>
+            <Nav.Link href="/results">
+              <h4>Результаты</h4>
+            </Nav.Link>
             <Nav.Link href="/about">
               <h4>Руководство</h4>
             </Nav.Link>

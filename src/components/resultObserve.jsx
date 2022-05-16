@@ -18,6 +18,9 @@ const ResultObserve = () => {
     const name = localStorage.getItem("Name");
 
     name === null ? navigate("/enter-name") : null;
+
+    // localStorage.setItem("FeedStreams", "");
+    // localStorage.setItem("DrawStreams", "");
   }, []);
 
   if (allData) {
@@ -115,7 +118,12 @@ const ResultObserve = () => {
       </div>
     );
   } else {
-    return <Spinner />;
+    return (
+      <div>
+        <NavBar />
+        <Spinner />
+      </div>
+    );
   }
 };
 
