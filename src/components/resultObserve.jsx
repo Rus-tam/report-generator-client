@@ -14,13 +14,9 @@ const ResultObserve = () => {
   let drawProperties = [];
 
   useEffect(() => {
-    getAllData();
     const name = localStorage.getItem("Name");
 
-    name === null ? navigate("/enter-name") : null;
-
-    // localStorage.setItem("FeedStreams", "");
-    // localStorage.setItem("DrawStreams", "");
+    name === null ? navigate("/enter-name") : getAllData();
   }, []);
 
   if (allData) {
@@ -28,7 +24,7 @@ const ResultObserve = () => {
     drawProperties = [...makeArrayStreamMassFlow(allData.txtData.drawStages, allData.excelData.drawProperties)];
   }
 
-  // console.log(allData);
+  console.log(feedProperties);
 
   if (allData) {
     return (

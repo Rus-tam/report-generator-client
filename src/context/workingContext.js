@@ -5,6 +5,22 @@ import axios from "axios";
 const WorkingContext = createContext();
 
 export const WorkingProvider = ({ children }) => {
+  // Send user name
+  const sendName = async (name) => {
+    try {
+      const nameSendingStatus = await axios.post("http://localhost:5000/get-name", {
+        userName: name,
+      });
+      if (nameSendingStatus.status === 201) {
+        return 201;
+      } else {
+        return 403;
+      }
+    } catch (e) {
+      null;
+    }
+  };
+
   // File Upload
   const [txtUploaded, setTxtUploaded] = useState(false);
   const [xlsxUploaded, setXlsxUploaded] = useState(false);
@@ -207,6 +223,7 @@ export const WorkingProvider = ({ children }) => {
   return (
     <WorkingContext.Provider
       value={{
+        sendName,
         onSubmit,
         txtStatusColor,
         isTxtSelected,
