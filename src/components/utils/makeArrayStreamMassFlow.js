@@ -1,9 +1,9 @@
-const makeArrayStreamMassFlow = (obj, prop) => {
+const makeArrayStreamMassFlow = (obj, prop, colNumb) => {
   const arr = [];
-  const sortedArr = [];
-  const streams = Object.keys(obj);
+  let streams = Object.keys(obj);
   const stages = Object.values(obj);
   for (let i = 0; i < streams.length; i++) {
+    prop[streams[i]] === undefined ? streams[i] = streams[i] + ' ' + '@' + colNumb : null;
     arr.push({
       stream: streams[i],
       stage: stages[i],
@@ -11,17 +11,7 @@ const makeArrayStreamMassFlow = (obj, prop) => {
     });
   }
 
-  console.log(arr);
-
-  // Сортируем элементы массива
-  for (let elem of arr) {
-    if (elem.stage.includes("Condenser")) {
-      sortedArr.push(elem);
-    } else if (!elem.stage.includes("Condenser") && !elem.stage.includes("Reboiler")) {
-    }
-  }
-
-  return sortedArr;
+  return arr;
 };
 
 export default makeArrayStreamMassFlow;

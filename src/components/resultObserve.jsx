@@ -20,11 +20,12 @@ const ResultObserve = () => {
   }, []);
 
   if (allData) {
-    feedProperties = [...makeArrayStreamMassFlow(allData.txtData.feedStages, allData.excelData.feedProperties)];
-    drawProperties = [...makeArrayStreamMassFlow(allData.txtData.drawStages, allData.excelData.drawProperties)];
+    feedProperties = [...makeArrayStreamMassFlow(allData.txtData.feedStages, allData.excelData.feedProperties, allData.txtData.colNumb)];
+    drawProperties = [...makeArrayStreamMassFlow(allData.txtData.drawStages, allData.excelData.drawProperties, allData.txtData.colNumb)];
   }
 
-  console.log(feedProperties);
+  // console.log(feedProperties);
+  // console.log(drawProperties);
 
   if (allData) {
     return (
